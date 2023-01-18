@@ -13,7 +13,7 @@ def linear_model(X, y, w, b):
         y_hat:线性模型的预测值
         loss:均方误差
         dw:权重系数一阶偏导
-        db：偏置项一阶偏导
+        db:偏置项一阶偏导
     """
     # 样本量
     num_train = X.shape[0]
@@ -98,14 +98,14 @@ def ridge_loss(X, y, w, b, alpha):
 
 # LDA算法实现
 """
-线性判别分析，是一种有监督的降维技术
-两组数据投影到同一条直线上，优化策略是类内距离尽可能小，类间距离尽可能大
-LDA实现步骤：
+线性判别分析,是一种有监督的降维技术
+两组数据投影到同一条直线上,优化策略是类内距离尽可能小,类间距离尽可能大
+LDA实现步骤:
 1、对训练集按照类别进行分组
 2、分别计算每组样本的协方差
 3、计算类间散度矩阵Sw
 4、计算两类样本的均值差μ0-μ1
-5、对类间散度矩阵Sw进行奇异值分解，并求其逆
+5、对类间散度矩阵Sw进行奇异值分解,并求其逆
 6、根据Sw-1(μ0-μ1)得到W
 7、最后计算投影后的数据点Y=WX
 """
@@ -145,14 +145,14 @@ class LDA:
         Sw = sigma0 + sigma1 
         # (4)分别计算两类数据自变量的均值、差
         u0, u1 = np.mean(X0, axis=0), np.mean(X1, axis=0)
-        mean_diff = np.atleast_1d(u0, u1)
+        mean_diff = np.atleast_1d(u0 - u1)
         # (5)对类内三段矩阵进行奇异值分解
-        U, S, V = np.linalg.svg(Sw)
+        U, S, V = np.linalg.svd(Sw)
         # (6)计算类内散度矩阵的逆
         Sw_ = np.dot(np.dot(V.T, np.linalg.pinv(np.diag(S))), U.T)
         # (7)计算w
         self.w = Sw_.dot(mean_diff)
-        
+
     # LDA分类预测
     def predict(self, X):
         # 初始化预测结果为空列表
@@ -164,5 +164,4 @@ class LDA:
             y = 1*(h<0)
             y_pred.append(y)
         return y_pred
-
 

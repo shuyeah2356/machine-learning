@@ -2,6 +2,9 @@ from sklearn.utils import shuffle
 import matplotlib.pyplot as plt
 from sklearn.datasets._samples_generator import make_classification
 import numpy as np
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
 # 线性回归模型 导入数据集
 def data_setting(data, target, sep_rate=0.8):
@@ -70,3 +73,12 @@ def lasso_data_setting():
     data = np.genfromtxt('lasso_data.txt', delimiter=",")
     x = data[:, 0: 100]
     y = data[:,100].reshape(-1, 1)
+
+# LDA算法的数据测试
+def lda_data_setting():
+    # 导入Iris数据
+    data = datasets.load_iris()
+    X, y = data.data, data.target
+    X, y = X[y != 2], y[y != 2]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=41)
+    return X_train, X_test, y_train, y_test

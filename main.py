@@ -1,9 +1,9 @@
-from data_utils import data_setting, list_line_plt, logit_data_setting
-from train_utils import linear_model, initialize_params
-from predict_utils import predict, r2_score, predict_logit, plotly_decision_boundary
+from data_utils import data_setting, list_line_plt, logit_data_setting, lda_data_setting
+from train_utils import linear_model, initialize_params, LDA
+from predict_utils import predict, r2_score, predict_logit, plotly_decision_boundary, plot_scatter
 from sklearn.datasets import load_diabetes
 from train_model import train_linear, train_logit
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, accuracy_score
 from sklearn import linear_model
 
 
@@ -41,3 +41,23 @@ plotly_decision_boundary(x_train, y_train, params)
 # ------------------------------------------------------------------------
 # LASSO(the least absolute shrinkage and selection operator)最小绝对收缩和选择算子
 # lasso回归模型训练
+
+# -------------------------------------------------------------
+# LDA算法的数据测试
+X_train, X_test, y_train, y_test = lda_data_setting()
+print(x_train, "x_train")
+print(X_test, "X_test")
+print(y_train, "y_train")
+print(y_test, "y_test")
+lda = LDA()
+# LDA模型拟合
+lda.fit(X_train, y_train)
+# LDA模型预测
+y_pred = lda.predict(X_test)
+# 评估模型在测试集上的分类准确率
+acc = accuracy_score(y_test, y_pred)
+print("Accuracy of Numpy LDA:", acc)
+plot_scatter(x_test, y_pred, list(y_test))
+
+
+

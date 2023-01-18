@@ -55,6 +55,7 @@ def plotly_decision_boundary(x_train, y_train, params):
     :return: 绘制Logit回归决策边界的可视化绘图
     """
     # 样本数量
+    
     n = x_train.shape[0]
     x_label_cls1 = list()  # 类别1,x坐标
     y_label_cls1 = list()  # 类别1,y坐标
@@ -79,6 +80,52 @@ def plotly_decision_boundary(x_train, y_train, params):
     plt.xlabel("X1")
     plt.ylabel("Y1")
     plt.show()
+
+# lda预测结果可视化绘图
+def plot_scatter(y_test, data_pred, data_y):
+    """
+    :param data_pred: 训练数据
+    :param data_y: 训练数据的标签
+    
+    :return: iris数据前两类可视化绘图
+    """
+    # 样本数量
+    n = y_test.shape[0]
+    x_label_cls1 = list()  # 类别1,x坐标
+    y_label_cls1 = list()  # 类别1,y坐标
+    x_label_cls2 = list()  # 类别2,x坐标
+    y_label_cls2 = list()  # 类别1,y坐标
+    x_pred_cls1 = list()  # 类别1,x坐标
+    y_pred_cls1 = list()  # 类别1,y坐标
+    x_pred_cls2 = list()  # 类别2,x坐标
+    y_pred_cls2 = list()  # 类别1,y坐标
+    for i in range(n):
+        if data_y[i]==1:
+            x_label_cls1.append(y_test[i][0])
+            y_label_cls1.append(y_test[i][1])
+        else:
+            x_label_cls2.append(y_test[i][0])
+            y_label_cls2.append(y_test[i][1])
+        if data_pred[i]==1:
+            x_pred_cls1.append(y_test[i][0])
+            y_pred_cls1.append(y_test[i][1])
+        else:
+            x_pred_cls2.append(y_test[i][0])
+            y_pred_cls2.append(y_test[i][1])
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(211)
+    ax.scatter(x_label_cls1, y_label_cls1, s=32, c="red")
+    ax.scatter(x_label_cls2, y_label_cls2, s=32, c="green")
+    ax = fig.add_subplot(212)
+    ax.scatter(x_pred_cls1, y_pred_cls1, s=32, c="red")
+    ax.scatter(x_pred_cls2, y_pred_cls2, s=32, c="green")
+    plt.xlabel("X1")
+    plt.ylabel("Y1")
+    plt.show()
+
+    
+
 
 
 
